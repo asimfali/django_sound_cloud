@@ -1,5 +1,6 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from src.base.services import get_path_upload_avatar, validate_size_image
 
 
 class AuthUser(models.Model):
@@ -10,8 +11,8 @@ class AuthUser(models.Model):
     city = models.CharField(max_length=30, blank=True, null=True)
     bio = models.TextField(max_length=2000, blank=True, null=True)
     display_name = models.CharField(max_length=30, blank=True, null=True)
-    avatar = models.ImageField(upload_to='', blank=True, null=True,
-                               validators=[FileExtensionValidator(allowed_extensions=['jpg'])]
+    avatar = models.ImageField(upload_to=get_path_upload_avatar, blank=True, null=True,
+                               validators=[FileExtensionValidator(allowed_extensions=['jpg']), validate_size_image]
                                )
 
     @property
